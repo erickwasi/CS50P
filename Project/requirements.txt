@@ -1,0 +1,12 @@
+#
+# To run this program the following packages/libraries must be installed:
+
+# tabulate
+# datetime
+# sys
+# csv
+
+pip install tabulate
+pip install datetime
+pip install sys
+pip install csv
