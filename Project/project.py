@@ -1,4 +1,4 @@
-#! /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
+# Medical Database Using Python and CSV
 
 ## Libraries Used
 from tabulate import tabulate  ## displays database
@@ -23,14 +23,14 @@ def printPerson(lst: list):
     print(f"Age: {lst[2]}")
     print(f"Telephone Number: {lst[3]}")
 
-## works with printPerson() to find the person's details so they can be printed
-def printRow(person):
+## works with printPerson()c to find the person's details so they can be printed
+def printRow(person: str):
     for lst in database:
         if person in lst:
             printPerson(lst)
 
 ## adds new data to the database
-def write(database):
+def write(database: list):
     name = input("Enter Name: ")
     duplicate = False
 
@@ -96,7 +96,7 @@ def write(database):
         print("Database has been updated.")
 
 ## edits data already in the database
-def edit(database):
+def edit(database: list):
     name = input("Whose data would you like to edit? ")  ## accepts user input
     for lst in database:  ## finds data in database
         try:
@@ -175,11 +175,11 @@ def edit(database):
             print("User not found.")  ## if name not in database, print error message
 
 ## prints database using tabulate library
-def view(database):
+def view(database: list):
     print(tabulate(database, headers="firstrow", tablefmt="grid"))  ## uses tabulate to output database
 
 ## exports database to a csv file (database.csv)
-def export(database):
+def export(database: list):
     with open("database.csv", "w") as CSVFile:
         w = csv.writer(CSVFile)
         w.writerows(database)
@@ -187,7 +187,7 @@ def export(database):
     print("Database exported as database.csv")
 
 ## searches the database by name, birthday, or telephone number and displays all the data of user, if found
-def search(database):
+def search(database: list):
     fourthChoice = input("Enter n to search by name, d for birthday, or t for telephone number: ")  ## accepts user input
     fourthChoice = fourthChoice.strip().lower()
     if fourthChoice == "n":  ## searches by name
@@ -224,7 +224,7 @@ def search(database):
                 print("User not found")  
 
 ## deletes user data, if administrator access is proven (password is 123456)
-def delete(database):
+def delete(database: list):
     admin = input("WARNING: Deleting requires administrator access. Enter the password (6 digits): ")
     admin = int(admin.strip())
     if admin == 123456:  ## checks for admin access
@@ -236,12 +236,18 @@ def delete(database):
         print("Password incorrect.")  
 
 ## gives user choice of quitting program or performing more tasks
-def thirdChoice():
-    thirdChoice = input("""To continue press c, to quit press q. Before quitting, ensure that you have pressed x to export, to make sure your database is saved. """)
-    if thirdChoice.strip().lower() == "c":
+def thirdChoice(choice: str):
+    if choice.strip().lower() == "c":
         main(database)
+    elif choice.strip().lower() == "q":
+        quit()
     else:
-        exit()
+        thirdChoice(input("""To continue press c, to quit press q. Before quitting, ensure that you have 
+pressed x to export, to make sure your database is saved. """))
+
+## quits program
+def quit():
+    exit(1)
 
 ## master function, runs other functions and provides intro screen for user
 def main(database):
@@ -253,27 +259,33 @@ If you have admin access, you can delete by pressing d.""")
     firstChoice = firstChoice.strip().lower()
     if firstChoice == "w":
         write(database)
-        thirdChoice()
+        thirdChoice(input("""To continue press c, to quit press q. Before quitting, ensure that you have 
+pressed x to export, to make sure your database is saved. """))
 
     elif firstChoice == "e":
         edit(database)
-        thirdChoice()
+        thirdChoice(input("""To continue press c, to quit press q. Before quitting, ensure that you have 
+pressed x to export, to make sure your database is saved. """))
 
     elif firstChoice == "v":
         view(database)
-        thirdChoice()
+        thirdChoice(input("""To continue press c, to quit press q. Before quitting, ensure that you have 
+pressed x to export, to make sure your database is saved. """))
 
     elif firstChoice == "x":
         export(database)
-        thirdChoice()
+        thirdChoice(input("""To continue press c, to quit press q. Before quitting, ensure that you have 
+pressed x to export, to make sure your database is saved. """))
 
     elif firstChoice == "s":
         search(database)
-        thirdChoice()
+        thirdChoice(input("""To continue press c, to quit press q. Before quitting, ensure that you have 
+pressed x to export, to make sure your database is saved. """))
 
     elif firstChoice == "d":
         delete(database)
-        thirdChoice()
+        thirdChoice(input("""To continue press c, to quit press q. Before quitting, ensure that you have 
+pressed x to export, to make sure your database is saved. """))
 
     else:
         print("Unrecognised. Please try again.")
