@@ -313,7 +313,7 @@ def quit():
     exit(1)
 
 ## master function, runs other functions and provides intro screen for user
-def main(database):
+def main(database: list):
     ## allows user to choose function: write, edit, view, export, search, or delete
     print("""Enter w to add to your database, e to edit details, v to view the full database, x to export it or s to search. 
 If you have admin access, you can delete by pressing d.""")
